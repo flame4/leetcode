@@ -1,3 +1,6 @@
+extern crate leetcode;
+
+
 fn main() {
-    println!("Hello, world!");
+    leetcode::run_all();
 }
