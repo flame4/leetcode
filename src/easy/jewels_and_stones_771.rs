@@ -28,3 +28,25 @@ impl Solution {
         s.chars().filter(|ch| jewels.contains(ch)).count() as i32
     }
 }
+
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn num_jewels_in_stones_1() {
+        let jewels = String::from("aA");
+        let stones = String::from("aAAAbbbb");
+        assert_eq!(4, Solution::num_jewels_in_stones(jewels, stones));
+
+        let jewels = String::from("z");
+        let stones = String::from("ZZ");
+        assert_eq!(0, Solution::num_jewels_in_stones(jewels, stones));
+
+        let jewels = String::from("");
+        let stones = String::from("");
+        assert_eq!(0, Solution::num_jewels_in_stones(jewels, stones));
+    }
+}
