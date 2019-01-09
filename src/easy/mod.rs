@@ -1,5 +1,6 @@
 pub mod jewels_and_stones_771;
 pub mod num_unique_emails;
+pub mod repeated_n_times;
 
 
 pub struct Solution;
