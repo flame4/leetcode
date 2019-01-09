@@ -1,6 +1,5 @@
 use std::collections::HashSet;
-
-pub struct Solution;
+use super::Solution;
 
 impl Solution {
     pub fn num_jewels_in_stones(j: String, s: String) -> i32 {
