@@ -32,17 +32,31 @@ impl Solution {
             "-.--",
             "--.."
         ];
-
-// TODO Rust的字符串处理揍得我鼻青脸肿.
-        let gen_morse_code = |s: &str, result_set: &mut HashSet<String>, morse_code_map: &Vec<&str>| {
+        for word in &words {
             let mut morse_code = String::new();
-
-            result_set.insert(morse_code)
-        };
-
-        for i in &words {
-            gen_morse_code(i, &mut result_set, &morse_code_map);
+            for letter in word.chars() {
+                let index= (letter as u8 - 97) as usize;
+                morse_code.extend(morse_code_map[index].chars());
+            }
+            result_set.insert(morse_code);
         }
         result_set.len() as i32
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+
+    use super::Solution;
+
+    #[test]
+    pub fn unique_morse_code_words_804() {
+        assert_eq!(2, Solution::unique_morse_representations(vec![
+            String::from("gin"),
+            String::from("zen"),
+            String::from("gig"),
+            String::from("msg")
+        ]))
     }
 }
