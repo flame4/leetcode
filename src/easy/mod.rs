@@ -3,6 +3,7 @@ pub mod n_repeated_element_in_size_2n_array_961;
 pub mod unique_email_addresses_929;
 pub mod unique_morse_code_words_804;
 pub mod squares_of_a_sorted_array_977;
+pub mod sort_array_by_parity_905;
 
 pub struct Solution;
 
