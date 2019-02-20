@@ -4,6 +4,8 @@ pub mod unique_email_addresses_929;
 pub mod unique_morse_code_words_804;
 pub mod squares_of_a_sorted_array_977;
 pub mod sort_array_by_parity_905;
+pub mod flipping_an_image_832;
+
 
 pub struct Solution;
 
