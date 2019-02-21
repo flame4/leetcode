@@ -6,6 +6,7 @@ pub mod squares_of_a_sorted_array_977;
 pub mod sort_array_by_parity_905;
 pub mod flipping_an_image_832;
 pub mod robot_return_to_origin_657;
+pub mod di_string_match_942;
 
 
 pub struct Solution;
