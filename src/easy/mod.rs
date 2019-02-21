@@ -7,7 +7,7 @@ pub mod sort_array_by_parity_905;
 pub mod flipping_an_image_832;
 pub mod robot_return_to_origin_657;
 pub mod di_string_match_942;
-
+pub mod merge_two_binary_trees_617;
 
 pub struct Solution;
 
