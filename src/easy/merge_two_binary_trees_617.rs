@@ -31,28 +31,17 @@ impl Solution {
     // 把t2的值加到t1上.
     pub fn merge_trees(t1: Option<Rc<RefCell<TreeNode>>>, t2: Option<Rc<RefCell<TreeNode>>>)
         -> Option<Rc<RefCell<TreeNode>>> {
-        Solution::merge_node(t1, t2);
+        // TODO 尝试了半天, 在rust内不容易做到直接递推的赋值节点
+        // 所以递归的产生节点，然后在本函数体内最后组合得到的结果.
+        // 所以只在一个函数内即可.
+        // TODO的思路后续再试试.
+        if t1 == None && t2 == None {
+            return None
+        }
 
     }
 
-    fn merge_node(t1: Option<Rc<RefCell<TreeNode>>>, t2: Option<Rc<RefCell<TreeNode>>>) {
-        if t2 == None {
-            return
-        }
-        let mut t2_node = t2.unwrap().borrow_mut();
 
-        let mut t1_rc;
-        if t1 == None {
-            t1_rc = Rc::new(RefCell::new(TreeNode::new(0)));
-        } else {
-            t1_rc = t1.unwrap();
-        }
-        let mut t1_node = t1_rc.borrow_mut();
-
-        t1_node.val += t2_node.val;
-        Solution::merge_node(t1_node.left, t2_node.left);
-        Solution::merge_node(t1_node.right, t2_node.right);
-    }
 }
 
 
