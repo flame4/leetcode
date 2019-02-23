@@ -2,21 +2,21 @@ use super::Solution;
 
 impl Solution {
     pub fn judge_circle(moves: String) -> bool {
-        let mut U_cnt = 0;
-        let mut D_cnt = 0;
-        let mut R_cnt = 0;
-        let mut L_cnt = 0;
+        let mut u_cnt = 0;
+        let mut d_cnt = 0;
+        let mut r_cnt = 0;
+        let mut l_cnt = 0;
 
         for x in moves.chars() {
             match x {
-                'U' => U_cnt += 1,
-                'D' => D_cnt += 1,
-                'R' => R_cnt += 1,
-                'L' => L_cnt += 1,
+                'U' => u_cnt += 1,
+                'D' => d_cnt += 1,
+                'R' => r_cnt += 1,
+                'L' => l_cnt += 1,
                 _ => (),
             }
         }
 
-        (U_cnt == D_cnt) && (R_cnt == L_cnt)
+        (u_cnt == d_cnt) && (r_cnt == l_cnt)
     }
 }
