@@ -80,6 +80,7 @@ impl Solution {
             (Some(n1),Some(n2))=> {
                 let v = n1.borrow_mut().val + n2.borrow_mut().val;
                 // Important,可以直接clone这里的Option!!!
+                // TODO 但是不能理解, 这样不代表调用了Rc的Clone方法, RC内的引用计数可以正确增加吗?
                 let left_tree = Solution::merge_trees(n1.borrow_mut().left.clone(), n2.borrow_mut().left.clone());
                 let right_tree= Solution::merge_trees(n1.borrow_mut().right.clone(), n2.borrow_mut().right.clone());
                 return Some(Rc::new(RefCell::new(TreeNode{
@@ -109,20 +110,20 @@ mod tests {
         let root1 = Rc::new(RefCell::new(TreeNode::new(1)));
         root1.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(3))));
         root1.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(2))));
-        root1.borrow_mut().left.unwrap().borrow_mut().left =  Some(Rc::new(RefCell::new(TreeNode::new(5))));
+        root1.borrow_mut().left.clone().unwrap().borrow_mut().left =  Some(Rc::new(RefCell::new(TreeNode::new(5))));
 
         let root2 = Rc::new(RefCell::new(TreeNode::new(2)));
-        root1.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(1))));
-        root1.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(3))));
-        root1.borrow_mut().left.unwrap().borrow_mut().right =  Some(Rc::new(RefCell::new(TreeNode::new(4))));
-        root1.borrow_mut().right.unwrap().borrow_mut().right =  Some(Rc::new(RefCell::new(TreeNode::new(7))));
+        root2.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(1))));
+        root2.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(3))));
+        root2.borrow_mut().left.clone().unwrap().borrow_mut().right =  Some(Rc::new(RefCell::new(TreeNode::new(4))));
+        root2.borrow_mut().right.clone().unwrap().borrow_mut().right =  Some(Rc::new(RefCell::new(TreeNode::new(7))));
 
         let ret = Solution::merge_trees(Some(root1), Some(root2)).unwrap();
         assert_eq!(ret.borrow().val, 3);
-        assert_eq!(ret.borrow().left.unwrap().borrow().val, 4);
-        assert_eq!(ret.borrow().right.unwrap().borrow().val, 5);
-        assert_eq!(ret.borrow().left.unwrap().borrow().left.unwrap().borrow().val, 5);
-        assert_eq!(ret.borrow().left.unwrap().borrow().right.unwrap().borrow().val, 4);
-        assert_eq!(ret.borrow().right.unwrap().borrow().right.unwrap().borrow().val, 7);
+        assert_eq!(ret.borrow().left.clone().unwrap().borrow().val, 4);
+        assert_eq!(ret.borrow().right.clone().unwrap().borrow().val, 5);
+        assert_eq!(ret.borrow().left.clone().unwrap().borrow().left.clone().unwrap().borrow().val, 5);
+        assert_eq!(ret.borrow().left.clone().unwrap().borrow().right.clone().unwrap().borrow().val, 4);
+        assert_eq!(ret.borrow().right.clone().unwrap().borrow().right.clone().unwrap().borrow().val, 7);
     }
 }
