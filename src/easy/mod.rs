@@ -9,6 +9,7 @@ pub mod robot_return_to_origin_657;
 pub mod di_string_match_942;
 pub mod merge_two_binary_trees_617;
 pub mod number_of_recent_calls_933;
+pub mod array_partition_1_561;
 
 pub struct Solution;
 
