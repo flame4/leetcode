@@ -11,6 +11,7 @@ pub mod merge_two_binary_trees_617;
 pub mod number_of_recent_calls_933;
 pub mod array_partition_1_561;
 pub mod sum_of_even_number_after_queries_985;
+pub mod sort_array_by_parity_ii_922;
 
 pub struct Solution;
 
