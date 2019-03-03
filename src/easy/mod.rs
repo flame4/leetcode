@@ -13,6 +13,7 @@ pub mod array_partition_1_561;
 pub mod sum_of_even_number_after_queries_985;
 pub mod sort_array_by_parity_ii_922;
 pub mod k_closest_points_to_origin_973;
+pub mod subdomain_visit_count_811;
 
 pub struct Solution;
 

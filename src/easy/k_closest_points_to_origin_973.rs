@@ -39,8 +39,9 @@ impl Point {
 
 impl Solution {
     // 练习使用rust的优先级队列 BinaryHeap.
-    // 暂时不包括强制控制capacity的功能, 只能自己手动控制保证复杂度为 O(Nlog(k))
+    // 暂时不包括强制控制capacity的功能, 只能自己手动控制保证复杂度为 O(Nlog(k)), 40ms.
     pub fn k_closest(points: Vec<Vec<i32>>, k: i32) -> Vec<Vec<i32>> {
+        // TODO 优化写法.
         if k == 0 { return Vec::new() }
         let mut heap = BinaryHeap::new();
         for point in points {
@@ -62,6 +63,9 @@ impl Solution {
         }
         ret
     }
+
+    // TODO nth_element 算法, 平均复杂度O(N).
+    // pub fn k_closest_1(points: Vec<Vec<i32>>, k: i32) -> Vec<Vec<i32>> {}
 }
 
 
