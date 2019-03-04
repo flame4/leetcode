@@ -10,31 +10,24 @@ impl Solution {
         let mut m = HashMap::new();
         for s in cpdomains {
             let mut ret = s.split_whitespace();
-            let cnt: usize = ret.next().unwrap().parse().unwrap();
-            let url = ret.next().unwrap();
-            url.rsplit(".").map(|mut x:String| x.to_owned()).fold("", |a:String, b: String| {
-                let k: String = a + &b;
-                if let Some(v) = m.get_mut(&k) {
+            let cnt: usize = ret.next().unwrap().parse::<usize>().unwrap();
+            let url = ret.next().unwrap().to_owned();
+            let mut now = String::new();
+            for domain in url.rsplit(".") {
+                if now.len() > 0 {
+                    now.insert(0, '.');
+                }
+                now = domain.to_owned() + &now;
+                if let Some(v) = m.get_mut(&now) {
                     *v += cnt;
                 } else {
-                    m.insert(k, cnt);
+                    m.insert(now.clone(), cnt);
                 }
-                k.to_owned()
-            });
+            }
         }
-
-        m.into_iter().map(|(url, size)| {
-            size.to_string() + " " + url
-        }).collect()
-//        vec![
-//            String::from("901 mail.com"),
-//            String::from("50 yahoo.com"),
-//            String::from("900 google.mail.com"),
-//            String::from("5 wiki.org"),
-//            String::from("5 org"),
-//            String::from("1 intel.mail.com"),
-//            String::from("951 com")
-//        ]
+        m.into_iter().map(|(url, cnt)| {
+            format!("{}", cnt) + " " + &url
+        }).collect::<Vec<String>>()
     }
 }
 
