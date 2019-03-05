@@ -14,9 +14,77 @@ pub mod sum_of_even_number_after_queries_985;
 pub mod sort_array_by_parity_ii_922;
 pub mod k_closest_points_to_origin_973;
 pub mod subdomain_visit_count_811;
+pub mod middle_of_the_linked_list_876;
+
 
 pub struct Solution;
 
+
+#[derive(PartialEq, Eq, Debug)]
+pub struct ListNode {
+    pub val: i32,
+    pub next: Option<Box<ListNode>>,
+}
+
+
+impl ListNode {
+    #[inline]
+    fn new(val: i32) -> Self {
+        ListNode {
+            next: None,
+            val,
+        }
+    }
+
+
+    fn from_vec(array: Vec<i32>) -> Option<Box<Self>> {
+        let mut root = Some(Box::new(ListNode::new(0)));
+        let mut follow = &mut root;
+        let length = array.len();
+        for (index, val) in array.into_iter().enumerate() {
+            follow.as_mut().unwrap().val = val;
+            if index >= length - 1 {
+                break
+            }
+            follow.as_mut().unwrap().next = Some(Box::new(ListNode::new(0)));
+            follow = &mut (follow.as_mut().unwrap().next);
+        }
+        root
+    }
+
+    fn into_vec(&self) -> Vec<i32> {
+        vec![0]
+    }
+
+    fn show(&self) {
+
+    }
+}
+
+use std::rc::Rc;
+use std::cell::RefCell;
+
+// Definition for a binary tree node.
+#[derive(Debug, PartialEq, Eq)]
+pub struct TreeNode {
+    pub val: i32,
+    pub left: Option<Rc<RefCell<TreeNode>>>,
+    pub right: Option<Rc<RefCell<TreeNode>>>,
+}
+
+impl TreeNode {
+    #[inline]
+    pub fn new(val: i32) -> Self {
+        TreeNode {
+            val,
+            left: None,
+            right: None,
+        }
+    }
+
+    // TODO: implement a function to show tree.
+    pub fn show() {}
+}
 
 pub fn run_jewels_and_stones_771() {
     println!("run jewels_and_stones test!");
