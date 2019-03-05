@@ -36,7 +36,7 @@ impl ListNode {
         }
     }
 
-
+    #[allow(dead_code)]
     fn from_vec(array: Vec<i32>) -> Option<Box<Self>> {
         let mut root = Some(Box::new(ListNode::new(0)));
         let mut follow = &mut root;
@@ -44,7 +44,7 @@ impl ListNode {
         for (index, val) in array.into_iter().enumerate() {
             follow.as_mut().unwrap().val = val;
             if index >= length - 1 {
-                break
+                break;
             }
             follow.as_mut().unwrap().next = Some(Box::new(ListNode::new(0)));
             follow = &mut (follow.as_mut().unwrap().next);
@@ -52,13 +52,21 @@ impl ListNode {
         root
     }
 
+    #[allow(dead_code)]
     fn into_vec(&self) -> Vec<i32> {
-        vec![0]
+        // TODO implement an Iter
+        let mut ret = vec![];
+        let mut r = self;
+        loop {
+            ret.push(r.val);
+            if r.next.is_none() { break; }
+            r = r.next.as_ref().unwrap().as_ref();
+        }
+        ret
     }
 
-    fn show(&self) {
-
-    }
+    #[allow(dead_code)]
+    fn show(&self) {}
 }
 
 use std::rc::Rc;
