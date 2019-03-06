@@ -1,4 +1,4 @@
-use super::Solution;
+use crate::Solution;
 use std::cmp::Ordering;
 use std::collections::binary_heap::BinaryHeap;
 
