@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use super::Solution;
+use crate::Solution;
 
 impl Solution {
     pub fn num_jewels_in_stones(j: String, s: String) -> i32 {

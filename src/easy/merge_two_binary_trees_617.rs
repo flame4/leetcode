@@ -1,5 +1,5 @@
-use super::Solution;
-use super::TreeNode;
+use crate::Solution;
+use crate::treenode::TreeNode;
 use std::rc::Rc;
 use std::cell::RefCell;
 
@@ -74,8 +74,8 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use super::Solution;
-    use super::TreeNode;
+    use crate::Solution;
+    use crate::treenode::TreeNode;
     use std::rc::Rc;
     use std::cell::RefCell;
 

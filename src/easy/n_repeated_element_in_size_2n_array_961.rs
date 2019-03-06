@@ -1,4 +1,4 @@
-use super::Solution;
+use crate::Solution;
 use std::collections::HashSet;
 
 impl Solution {
@@ -19,7 +19,7 @@ impl Solution {
 #[cfg(test)]
 mod tests {
 
-    use super::Solution;
+    use crate::Solution;
 
     #[test]
     pub fn repeated_n_times_1() {

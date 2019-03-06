@@ -1,4 +1,4 @@
-use super::Solution;
+use crate::Solution;
 
 
 impl Solution {
@@ -27,7 +27,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use super::Solution;
+    use crate::Solution;
 
     #[test]
     pub fn sort_array_by_parity_ii_1() {

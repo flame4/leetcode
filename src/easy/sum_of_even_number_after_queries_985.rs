@@ -1,4 +1,4 @@
-use super::Solution;
+use crate::Solution;
 
 impl Solution {
     // v1: 练习迭代器版本, 每次改动重新求和, 肯定很慢... 104ms
@@ -37,7 +37,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use super::Solution;
+    use crate::Solution;
 
     #[test]
     pub fn sum_even_after_queries_1() {

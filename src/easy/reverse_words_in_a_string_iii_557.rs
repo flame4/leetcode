@@ -1,4 +1,4 @@
-use super::Solution;
+use crate::Solution;
 
 impl Solution {
     // TODO 直接在原始内存上操作.
@@ -21,7 +21,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use super::Solution;
+    use crate::Solution;
 
     #[test]
     pub fn reverse_words_1() {

@@ -1,7 +1,8 @@
 pub mod easy;
 pub mod medium;
 pub mod hard;
+pub mod listnode;
+pub mod treenode;
 
-pub fn run_all() {
-    easy::run_jewels_and_stones_771();
-}
+
+pub struct Solution;

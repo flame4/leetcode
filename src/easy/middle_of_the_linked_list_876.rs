@@ -1,5 +1,5 @@
-use super::Solution;
-use super::ListNode;
+use crate::Solution;
+use crate::listnode::ListNode;
 
 
 impl Solution {
@@ -37,7 +37,7 @@ impl Solution {
 #[cfg(test)]
 mod tests {
     use super::Solution;
-    use super::ListNode;
+    use crate::listnode::ListNode;
 
     #[test]
     pub fn middle_node_1() {

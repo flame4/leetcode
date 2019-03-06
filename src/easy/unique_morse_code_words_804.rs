@@ -1,4 +1,4 @@
-use super::Solution;
+use crate::Solution;
 
 impl Solution {
     pub fn unique_morse_representations(words: Vec<String>) -> i32 {
@@ -48,7 +48,7 @@ impl Solution {
 #[cfg(test)]
 mod tests {
 
-    use super::Solution;
+    use crate::Solution;
 
     #[test]
     pub fn unique_morse_code_words_804() {

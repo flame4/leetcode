@@ -1,4 +1,4 @@
-use super::Solution;
+use crate::Solution;
 
 impl Solution {
     pub fn sort_array_by_parity(a: Vec<i32>) -> Vec<i32> {
@@ -25,7 +25,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use super::Solution;
+    use crate::Solution;
 
     #[test]
     fn sort_array_by_parity_1() {
