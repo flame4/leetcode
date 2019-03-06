@@ -16,6 +16,7 @@ pub mod k_closest_points_to_origin_973;
 pub mod subdomain_visit_count_811;
 pub mod middle_of_the_linked_list_876;
 pub mod reverse_words_in_a_string_iii_557;
+pub mod increasing_order_search_tree_897;
 
 use crate::Solution;
 

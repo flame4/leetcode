@@ -56,7 +56,8 @@ impl Solution {
             (Some(n1),Some(n2))=> {
                 let v = n1.borrow_mut().val + n2.borrow_mut().val;
                 // Important,可以直接clone这里的Option!!!
-                // TODO 但是不能理解, 这样不代表调用了Rc的Clone方法, RC内的引用计数可以正确增加吗?
+                // TODO_DONE 但是不能理解, 这样不代表调用了Rc的Clone方法, RC内的引用计数可以正确增加吗?
+                // Option实现的Clone要求内部T有Clone的trait bound, 所以没有问题.
                 let left_tree = Solution::merge_trees(n1.borrow_mut().left.clone(), n2.borrow_mut().left.clone());
                 let right_tree= Solution::merge_trees(n1.borrow_mut().right.clone(), n2.borrow_mut().right.clone());
                 return Some(Rc::new(RefCell::new(TreeNode{
