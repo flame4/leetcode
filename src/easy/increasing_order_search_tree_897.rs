@@ -25,7 +25,7 @@ impl Solution {
 mod tests {
     use super::*;
 
-    #[test]
+    // #[test]
     pub fn increasing_bst() {
         let root = Rc::new(RefCell::new(TreeNode::new(2)));
         root.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(1))));

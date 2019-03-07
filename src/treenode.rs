@@ -1,5 +1,7 @@
 use std::rc::Rc;
 use std::cell::RefCell;
+use std::collections::vec_deque::VecDeque;
+
 
 // Definition for a binary tree node.
 #[derive(Debug, PartialEq, Eq)]
@@ -20,8 +22,28 @@ impl TreeNode {
         }
     }
 
-    /// 层次遍历法构造树
-    /// pub fn from_layer_vec(input: Vec<Option<i32>>) -> Self {}
+    /// 层次遍历法构造树, 和leetcode给出的方式一样.
+    /// From https://github.com/Aloxaf/leetcode_prelude/blob/master/leetcode_prelude/src/btree.rs, thx :-)
+    pub fn from_layer_vec(mut input: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
+        if input.is_empty() { return None; }
+        // Queue内的节点装的是所有准备好 **给他们的儿子赋值** 的节点
+        let mut queue = VecDeque::new();
+        let root = Some(Rc::new(RefCell::new(TreeNode::new(input[0].unwrap()))));
+        queue.push_back(root.clone());
+        for i in input[1..].chunks(2) {
+            let node = queue.pop_front().unwrap().unwrap();
+            if let Some(val) = i[0] {
+                node.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(val))));
+                queue.push_back(node.borrow().left.clone());
+            }
+            if i.len() < 2 { break; }
+            if let Some(val) = i[1] {
+                node.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(val))));
+                queue.push_back(node.borrow().right.clone());
+            }
+        }
+        root
+    }
 
     pub fn in_order(&self) -> Vec<i32> {
         let mut ret;
@@ -123,6 +145,13 @@ mod tests {
         root.borrow_mut().left.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(4))));
         root.borrow_mut().right.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(7))));
         assert_eq!(root.borrow().post_order(), vec![4, 1, 7, 3, 2]);
+    }
+
+    #[test]
+    pub fn from_layer_vec_test() {
+        let v = vec![Some(2), Some(1), Some(3), None, Some(4), None, Some(7)];
+        let tree = TreeNode::from_layer_vec(v);
+        assert_eq!(tree.unwrap().borrow().pre_order(), vec![2, 1, 4, 3, 7]);
     }
 }
 
