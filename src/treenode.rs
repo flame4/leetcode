@@ -20,8 +20,10 @@ impl TreeNode {
         }
     }
 
+    /// 层次遍历法构造树
+    /// pub fn from_layer_vec(input: Vec<Option<i32>>) -> Self {}
 
-    pub fn pre_order(&self) -> Vec<i32> {
+    pub fn in_order(&self) -> Vec<i32> {
         let mut ret;
         if self.left.is_some() {
             ret = self.left.clone().unwrap().borrow().pre_order();
@@ -35,20 +37,42 @@ impl TreeNode {
         ret
     }
 
-    pub fn in_order(&self) -> Vec<i32> {
-        // TODO
-        vec![0]
+    pub fn pre_order(&self) -> Vec<i32> {
+        let mut ret = vec![self.val];
+        if self.left.is_some() {
+            ret.extend(self.left.clone().unwrap().borrow().in_order())
+        }
+        if self.right.is_some() {
+            ret.extend(self.right.clone().unwrap().borrow().in_order())
+        }
+        ret
     }
 
     pub fn post_order(&self) -> Vec<i32> {
-        // TODO
-        vec![0]
+        let mut ret;
+        match (self.left.clone(), self.right.clone()) {
+            (None, None) => ret = Vec::new(),
+            (Some(l), None) => {
+                ret = l.borrow().post_order();
+            }
+            (None, Some(r)) => {
+                ret = r.borrow().post_order();
+            }
+            (Some(l), Some(r)) => {
+                ret = l.borrow().post_order();
+                ret.extend(r.borrow().post_order());
+            }
+        }
+        ret.push(self.val);
+        ret
     }
 
     pub fn is_leaf(&self) -> bool {
         self.right.is_none() && self.left.is_none()
     }
 
+    /// Get The Leaf Node Of This Tree.
+    /// Definition reference: easy/leaf_similar_tree_872.rs
     pub fn get_leaf_vec(&self) -> Vec<i32> {
         if self.is_leaf() { return vec![self.val]; }
         let mut ret;
@@ -72,13 +96,33 @@ mod tests {
     use super::TreeNode;
 
     #[test]
+    pub fn in_order_test() {
+        let root = Rc::new(RefCell::new(TreeNode::new(2)));
+        root.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(1))));
+        root.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(3))));
+        root.borrow_mut().left.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(4))));
+        root.borrow_mut().right.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(7))));
+        assert_eq!(root.borrow().in_order(), vec![1, 4, 2, 3, 7]);
+    }
+
+    #[test]
     pub fn pre_order_test() {
         let root = Rc::new(RefCell::new(TreeNode::new(2)));
         root.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(1))));
         root.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(3))));
         root.borrow_mut().left.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(4))));
         root.borrow_mut().right.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(7))));
-        assert_eq!(root.borrow().pre_order(), vec![1, 4, 2, 3, 7]);
+        assert_eq!(root.borrow().pre_order(), vec![2, 1, 4, 3, 7]);
+    }
+
+    #[test]
+    pub fn post_order_test() {
+        let root = Rc::new(RefCell::new(TreeNode::new(2)));
+        root.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(1))));
+        root.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(3))));
+        root.borrow_mut().left.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(4))));
+        root.borrow_mut().right.clone().unwrap().borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(7))));
+        assert_eq!(root.borrow().post_order(), vec![4, 1, 7, 3, 2]);
     }
 }
 
