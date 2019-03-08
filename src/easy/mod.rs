@@ -19,3 +19,4 @@ pub mod reverse_words_in_a_string_iii_557;
 pub mod increasing_order_search_tree_897;
 pub mod shortest_distance_to_a_character_821;
 pub mod leaf_similar_tree_872;
+pub mod groups_of_special_equivalent_strings_893;
