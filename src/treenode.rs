@@ -24,7 +24,7 @@ impl TreeNode {
 
     /// 层次遍历法构造树, 和leetcode给出的方式一样.
     /// From https://github.com/Aloxaf/leetcode_prelude/blob/master/leetcode_prelude/src/btree.rs, thx :-)
-    pub fn from_layer_vec(mut input: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
+    pub fn from_layer_vec(input: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
         if input.is_empty() { return None; }
         // Queue内的节点装的是所有准备好 **给他们的儿子赋值** 的节点
         let mut queue = VecDeque::new();
@@ -104,7 +104,7 @@ impl TreeNode {
             ret = Vec::new();
         }
         if self.right.is_some() {
-            ret.extend(self.right.clone().unwrap().borrow().pre_order());
+            ret.extend(self.right.clone().unwrap().borrow().get_leaf_vec());
         }
         ret
     }

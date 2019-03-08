@@ -7,7 +7,7 @@ use std::cell::RefCell;
 impl Solution {
     pub fn increasing_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
         if root.is_none() { return None; }
-        let mut l = root.unwrap().borrow().pre_order();
+        let mut l = root.unwrap().borrow().in_order();
         l.reverse();
         // 为了避免正序过程中的借用问题，可以选择倒着建立树.
         let mut ret = None;
@@ -25,7 +25,7 @@ impl Solution {
 mod tests {
     use super::*;
 
-    // #[test]
+    #[test]
     pub fn increasing_bst() {
         let root = Rc::new(RefCell::new(TreeNode::new(2)));
         root.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(1))));
