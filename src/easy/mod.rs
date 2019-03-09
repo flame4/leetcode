@@ -21,3 +21,4 @@ pub mod shortest_distance_to_a_character_821;
 pub mod leaf_similar_tree_872;
 pub mod groups_of_special_equivalent_strings_893;
 pub mod uncommon_words_from_2_sentences_884;
+pub mod non_decreasing_array_665;
