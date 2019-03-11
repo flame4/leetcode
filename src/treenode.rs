@@ -48,13 +48,13 @@ impl TreeNode {
     pub fn in_order(&self) -> Vec<i32> {
         let mut ret;
         if self.left.is_some() {
-            ret = self.left.clone().unwrap().borrow().pre_order();
+            ret = self.left.clone().unwrap().borrow().in_order();
         } else {
             ret = Vec::new();
         }
         ret.push(self.val);
         if self.right.is_some() {
-            ret.extend(self.right.clone().unwrap().borrow().pre_order());
+            ret.extend(self.right.clone().unwrap().borrow().in_order());
         }
         ret
     }
@@ -62,10 +62,10 @@ impl TreeNode {
     pub fn pre_order(&self) -> Vec<i32> {
         let mut ret = vec![self.val];
         if self.left.is_some() {
-            ret.extend(self.left.clone().unwrap().borrow().in_order())
+            ret.extend(self.left.clone().unwrap().borrow().pre_order())
         }
         if self.right.is_some() {
-            ret.extend(self.right.clone().unwrap().borrow().in_order())
+            ret.extend(self.right.clone().unwrap().borrow().pre_order())
         }
         ret
     }
