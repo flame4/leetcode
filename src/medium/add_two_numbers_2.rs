@@ -2,6 +2,9 @@ use crate::Solution;
 use crate::listnode::ListNode;
 
 impl Solution {
+    /// https://leetcode.com/problems/add-two-numbers/
+    /// 递归的叠加即可, 这里用到了Option的借用, 不断修改这个引用来迭代节点位置.
+    /// rust的借用分析还不够强大, 每个分支除了break掉的, 都要把l1,l2赋值一次, 才不会报错moved value.
     pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         let mut ret = None;
         let mut follower = &mut ret;
