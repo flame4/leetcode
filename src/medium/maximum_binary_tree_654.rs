@@ -71,8 +71,6 @@ mod tests {
             None,
             Some(1)
         ]);
-        println!("{:#?}", root1.clone());
-        println!("{:#?}", root2.clone());
         assert_eq!(root1.clone().unwrap().borrow().post_order(), root2.clone().unwrap().borrow().post_order());
         assert_eq!(root1.clone().unwrap().borrow().pre_order(), root2.clone().unwrap().borrow().pre_order());
     }

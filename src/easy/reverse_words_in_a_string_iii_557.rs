@@ -2,7 +2,7 @@ use crate::Solution;
 
 impl Solution {
     // TODO 直接在原始内存上操作.
-    pub fn reverse_words(s: String) -> String {
+    pub fn reverse_words_iii(s: String) -> String {
         let mut ret = String::new();
         for i in s.split_whitespace() {
             unsafe {
@@ -24,8 +24,8 @@ mod tests {
     use crate::Solution;
 
     #[test]
-    pub fn reverse_words_1() {
-        assert_eq!(Solution::reverse_words("Let's take LeetCode contest".to_string()), "s'teL ekat edoCteeL tsetnoc".to_string());
-        assert_eq!(Solution::reverse_words("".to_string()), "".to_string())
+    pub fn reverse_words_iii_test() {
+        assert_eq!(Solution::reverse_words_iii("Let's take LeetCode contest".to_string()), "s'teL ekat edoCteeL tsetnoc".to_string());
+        assert_eq!(Solution::reverse_words_iii("".to_string()), "".to_string())
     }
 }
