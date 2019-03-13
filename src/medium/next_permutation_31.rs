@@ -41,26 +41,26 @@ mod tests {
     pub fn next_permutation_test() {
         let mut v = vec![1, 2, 3, 4, 5, 6];
         Solution::next_permutation(&mut v);
-//        assert_eq!(vec![1,2,3,4,6,5], v.as_mut());
+        assert_eq!(vec![1,2,3,4,6,5], v.as_mut());
         Solution::next_permutation(&mut v);
         assert_eq!(vec![1,2,3,5,4,6], v.as_mut());
-//        Solution::next_permutation(&mut v);
-//        assert_eq!(vec![1,2,3,5,6,4], v.as_mut());
-//        Solution::next_permutation(&mut v);
-//        assert_eq!(vec![1,2,3,6,4,5], v.as_mut());
-//        Solution::next_permutation(&mut v);
-//        assert_eq!(vec![1,2,3,6,5,4], v.as_mut());
-//        Solution::next_permutation(&mut v);
-//        assert_eq!(vec![1,2,4,3,5,6], v.as_mut());
-//
-//        let mut v = vec![];
-//        Solution::next_permutation(&mut v);
-//        let a : Vec<i32> = vec![];
-//        assert_eq!(a, v.as_mut());
-//
-//        let mut v = vec![1];
-//        Solution::next_permutation(&mut v);
-//        assert_eq!(vec![1], v.as_mut());
+        Solution::next_permutation(&mut v);
+        assert_eq!(vec![1,2,3,5,6,4], v.as_mut());
+        Solution::next_permutation(&mut v);
+        assert_eq!(vec![1,2,3,6,4,5], v.as_mut());
+        Solution::next_permutation(&mut v);
+        assert_eq!(vec![1,2,3,6,5,4], v.as_mut());
+        Solution::next_permutation(&mut v);
+        assert_eq!(vec![1,2,4,3,5,6], v.as_mut());
+
+        let mut v = vec![];
+        Solution::next_permutation(&mut v);
+        let a : Vec<i32> = vec![];
+        assert_eq!(a, v.as_mut());
+
+        let mut v = vec![1];
+        Solution::next_permutation(&mut v);
+        assert_eq!(vec![1], v.as_mut());
     }
 }
 
