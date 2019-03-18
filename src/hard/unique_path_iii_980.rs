@@ -30,7 +30,6 @@ impl Solution {
                 }
             }
         }
-        println!("{} {} {}", start_x, start_y, need_visit);
         Solution::recursive_unique_path_iii(start_x, start_y, &mut {grid}, &mut cnt, &mut has_visit, need_visit);
         cnt
     }

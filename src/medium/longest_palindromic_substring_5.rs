@@ -44,7 +44,7 @@ impl Solution {
             for i in (0..(s.len() - 2)).rev() {
                 for j in (i + 2)..s.len() {
                     m[i][j] = m[i + 1][j - 1] && s_byte[i] == s_byte[j];
-                    if j - i + 1> max && m[i][j] {
+                    if j - i + 1 > max && m[i][j] {
                         max = j - i + 1;
                         max_start = i;
                         max_end = j;
@@ -57,8 +57,43 @@ impl Solution {
 
     /// 单数回文和双数回文的判定不同是处理起来比较麻烦的.
     /// 一个巧妙的方法是, 在每一个间隔处插入一个"#", 会让所有的情况都变成单数回文.
+    /// 这样可以在O(n^2)的时间内, 从任意点向两端扩容出去直到找到最长的回文子串.
+    /// 这个处理被叫做Manacher(马拉车算法的预处理).
+    /// 20ms, faster than 32.22%.
     pub fn longest_palindrome_2(s: String) -> String {
-        "".to_string()
+        let mut s = Solution::pre_deal_palindrome(s);
+        let mut max_pos = 0;
+        let mut max_radius = 0;
+        for i in 0..s.len() {
+            let mut radius = 0;
+            while (i - radius) >= 1 && (i + radius + 1) < s.len() {
+                if s.as_bytes()[i - radius - 1] == s.as_bytes()[i + radius + 1] {
+                    radius += 1;
+                } else {
+                    break
+                }
+            }
+            if radius > max_radius {
+                println!("pos = {}, radius = {}", max_pos, max_radius);
+                max_pos = i;
+                max_radius = radius;
+            }
+        }
+        println!("pos = {}, radius = {} \n", max_pos, max_radius);
+        String::from_utf8(s.as_bytes()[(max_pos-max_radius)..=(max_pos+max_radius)].to_vec()).unwrap().replace("#", "")
+    }
+
+
+    /// 预处理字符串, 加#穿插.
+    fn pre_deal_palindrome(s: String) -> String {
+        let mut new = String::new();
+        new.reserve(s.len() * 2);
+        for i in s.chars() {
+            new.push('#');
+            new.push(i);
+        }
+        new.push('#');
+        new
     }
 }
 
@@ -76,5 +111,16 @@ mod test {
         assert_eq!(Solution::longest_palindrome("c".to_string()), "c".to_string());
         assert_eq!(Solution::longest_palindrome("ccc".to_string()), "ccc".to_string());
         assert_eq!(Solution::longest_palindrome("cccc".to_string()), "cccc".to_string());
+    }
+
+    #[test]
+    pub fn longest_palindromic_2_test() {
+        assert_eq!(Solution::longest_palindrome_2("bbbbb".to_string()), "bbbbb".to_string());
+        assert_eq!(Solution::longest_palindrome_2("bababd".to_string()), "babab".to_string());
+        assert_eq!(Solution::longest_palindrome_2("cbbd".to_string()), "bb".to_string());
+        assert_eq!(Solution::longest_palindrome_2("".to_string()), "".to_string());
+        assert_eq!(Solution::longest_palindrome_2("c".to_string()), "c".to_string());
+        assert_eq!(Solution::longest_palindrome_2("ccc".to_string()), "ccc".to_string());
+        assert_eq!(Solution::longest_palindrome_2("cccc".to_string()), "cccc".to_string());
     }
 }
