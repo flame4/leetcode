@@ -38,6 +38,10 @@ impl Solution {
     /// 好处是我们确保最后的下界一定在nums2内, 方便我们处理nums1已经遍历完了的边界情况.
     /// 要注意循环的停止条件是找到两个位置i,j. nums1中i前面的都小于等于j. nums2中j前面的都小于等于j.
     /// 这里在算offset的时候会有点糊涂, 减少思维负担的做法是严格定义清楚i,j的含义, 代码中严格卡自己的定义来.
+    /// 需要搞清楚的有三件事情:
+    /// 1. 当一边选择为i的时候， 另一边的j计算规则
+    /// 2. 当m+n is odd, median其实只有一个数字, 怎么在双数组内表征这种情况? 核心问题是median这个的定义.
+    /// 3. 处理nums1到了边界的情况.
     #[allow(unused_assignments)]
     fn find_median_sorted_noempty_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
         // 注释别名为m

@@ -22,3 +22,4 @@ pub mod leaf_similar_tree_872;
 pub mod groups_of_special_equivalent_strings_893;
 pub mod uncommon_words_from_2_sentences_884;
 pub mod non_decreasing_array_665;
+pub mod valid_parentheses_20;

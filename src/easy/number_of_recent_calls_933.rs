@@ -42,7 +42,7 @@ impl RecentCounter {
 
 
 #[cfg(test)]
-mod test {
+mod tests {
     use super::RecentCounter;
     #[test]
     pub fn number_of_recent_calls_1() {
