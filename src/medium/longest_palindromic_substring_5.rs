@@ -70,17 +70,86 @@ impl Solution {
                 if s.as_bytes()[i - radius - 1] == s.as_bytes()[i + radius + 1] {
                     radius += 1;
                 } else {
-                    break
+                    break;
                 }
             }
             if radius > max_radius {
-                println!("pos = {}, radius = {}", max_pos, max_radius);
                 max_pos = i;
                 max_radius = radius;
             }
         }
-        println!("pos = {}, radius = {} \n", max_pos, max_radius);
-        String::from_utf8(s.as_bytes()[(max_pos-max_radius)..=(max_pos+max_radius)].to_vec()).unwrap().replace("#", "")
+        String::from_utf8(s.as_bytes()[(max_pos - max_radius)..=(max_pos + max_radius)]
+            .to_vec()).unwrap().replace("#", "")
+    }
+
+
+    /// 马拉车算法.
+    /// http://www.cnblogs.com/grandyang/p/4475985.html
+    /// 定义m[i]为以i为中心的字符串的半径. 只有自己的半径为0.
+    /// 算法从左向右扩展, 有两个变量记录当前访问到的能延伸到最右端的(没说是当前最长的)的index和能访问到的最右边位置.
+    /// 分别为 most_right_center, most_right_index
+    /// m[i] = mri > i ? min(m[2*mrc - i], mri-i) : 1;
+    ///               j=i的对称   mrc             i          mri
+    ///     ↓         ↓            ↓              ↓           ↓
+    /// ---------------------------------------------------------------
+    /// 假设mrc已知. i只有两种情况, mri > i,  mri <= i.
+    /// mri > i的情况下, j是i的对称. 假设i + m[j] < mri, 那么由mrc的对称性可知道, m[i] = m[j].
+    /// 否则m[i]到mri的位置是不用比的, 只需要从mri往后比.
+    /// 因为mri只被扩展一次, 所以是o(n)的算法复杂度.
+    /// mri == i 的情况, 没有其他可利用的信息, 只能从i往后拓展.
+    /// mri > i的情况, 只能是mri = i - 1. 因为如果mri = i - 2, 那么mri最小也应该是i-1.
+    /// 0ms, faster than 100%.
+    pub fn longest_palindrome_3(s: String) -> String {
+        let mut s = Solution::pre_deal_palindrome(s);
+        let mut m = Vec::new();
+        m.resize(s.len(), 0);
+        // 当前已经控制到的右边界.
+        let mut most_right_index = 0;
+        let mut most_right_center = 0;
+        for i in 0..s.len() {
+            // println!(" i = {}, mri = {}, mrc = {}, m[i] = {}", i , most_right_index, most_right_center, m[i]);
+            if i < most_right_index {
+                // 因为i < most_right_index,从对称性可知, j一定也不会越界.
+                let j = 2 * most_right_center - i;
+                if most_right_index - i > m[j] {
+                    m[i] = m[j];
+                } else {
+                    while (most_right_index + 1) < s.len()
+                        && (2 * i >= most_right_index + 1) {
+                        if s.as_bytes()[most_right_index + 1] == s.as_bytes()[2 * i - most_right_index - 1] {
+                            most_right_index += 1;
+                        } else {
+                            break
+                        }
+                    }
+                    m[i] = most_right_index - i;
+                    most_right_center = i;
+                }
+            } else {
+                most_right_index = i;
+                most_right_center = i;
+                m[i] = 0;
+                let mut tmp = 1;
+                while i >= tmp && (i+tmp) < s.len() && s.as_bytes()[i + tmp] == s.as_bytes()[i - tmp] {
+                    most_right_index += 1;
+                    m[i] = tmp;
+                    tmp += 1;
+                }
+            }
+            // println!(" i = {}, mri = {}, mrc = {}, m[i] = {}", i , most_right_index, most_right_center, m[i]);
+        }
+
+        let mut c = 0;
+        for i in 1..m.len() {
+            if m[i] > m[c] {
+                c = i;
+            }
+        }
+
+        // println!("");
+        String::from_utf8(s.as_bytes()
+            [(c - m[c])..=(c + m[c])]
+            .to_vec()).unwrap().replace("#", "")
     }
 
 
@@ -122,5 +191,16 @@ mod test {
         assert_eq!(Solution::longest_palindrome_2("c".to_string()), "c".to_string());
         assert_eq!(Solution::longest_palindrome_2("ccc".to_string()), "ccc".to_string());
         assert_eq!(Solution::longest_palindrome_2("cccc".to_string()), "cccc".to_string());
+    }
+
+    #[test]
+    pub fn longest_palindromic_3_test() {
+        assert_eq!(Solution::longest_palindrome_3("bbbbb".to_string()), "bbbbb".to_string());
+        assert_eq!(Solution::longest_palindrome_3("bababd".to_string()), "babab".to_string());
+        assert_eq!(Solution::longest_palindrome_3("cbbd".to_string()), "bb".to_string());
+        assert_eq!(Solution::longest_palindrome_3("".to_string()), "".to_string());
+        assert_eq!(Solution::longest_palindrome_3("c".to_string()), "c".to_string());
+        assert_eq!(Solution::longest_palindrome_3("ccc".to_string()), "ccc".to_string());
+        assert_eq!(Solution::longest_palindrome_3("cccc".to_string()), "cccc".to_string());
     }
 }
