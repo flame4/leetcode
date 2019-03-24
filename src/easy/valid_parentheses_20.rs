@@ -2,7 +2,6 @@ use crate::Solution;
 
 impl Solution {
     pub fn is_valid_parentheses(s: String) -> bool {
-        let mut ret = true;
         let mut stack = Vec::new();
         for c in s.chars() {
             if Solution::judge_open(c) {

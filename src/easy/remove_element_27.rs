@@ -9,7 +9,7 @@ impl Solution {
         if nums.is_empty() { return 0;}
         let mut valid = nums.len() - 1;
         let mut poineer = nums.len() - 1;
-        while poineer >= 0 {
+        loop {
             if nums[poineer] == val {
                 while valid > poineer && nums[valid] == val {
                     valid -= 1;
@@ -17,7 +17,7 @@ impl Solution {
                 nums.swap(valid, poineer);
             }
             if poineer == 0 { break; }
-            poineer -= 1;
+            poineer -= 1 ;
         }
         if nums[valid] == val {
             nums.truncate(valid);

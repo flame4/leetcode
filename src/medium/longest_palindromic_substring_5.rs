@@ -18,7 +18,7 @@ impl Solution {
     pub fn longest_palindrome(s: String) -> String {
         if s.is_empty() { return "".to_string(); }
         let mut m = Vec::new();
-        for i in 0..s.len() {
+        for _ in 0..s.len() {
             let mut v = Vec::new();
             v.resize(s.len(), false);
             m.push(v);
@@ -61,7 +61,7 @@ impl Solution {
     /// 这个处理被叫做Manacher(马拉车算法的预处理).
     /// 20ms, faster than 32.22%.
     pub fn longest_palindrome_2(s: String) -> String {
-        let mut s = Solution::pre_deal_palindrome(s);
+        let s = Solution::pre_deal_palindrome(s);
         let mut max_pos = 0;
         let mut max_radius = 0;
         for i in 0..s.len() {
@@ -100,7 +100,7 @@ impl Solution {
     /// mri > i的情况, 只能是mri = i - 1. 因为如果mri = i - 2, 那么mri最小也应该是i-1.
     /// 0ms, faster than 100%.
     pub fn longest_palindrome_3(s: String) -> String {
-        let mut s = Solution::pre_deal_palindrome(s);
+        let s = Solution::pre_deal_palindrome(s);
         let mut m = Vec::new();
         m.resize(s.len(), 0);
         // 当前已经控制到的右边界.
