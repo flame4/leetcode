@@ -68,7 +68,7 @@ impl Solution {
                 let last2 = stack.pop().unwrap_or(end + 1);
                 if height[last1] >= height[end] {
                     ret += (end - last1 - 1) as i32 * (height[last1] - height[end]);
-                    if (last2 < end) { stack.push(last2); }
+                    if last2 < end { stack.push(last2); }
                     stack.push(last1);
                     break;
                 } else if last2 < end {
