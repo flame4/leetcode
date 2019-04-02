@@ -11,3 +11,6 @@ pub mod three_sum_15;
 pub mod max_increase_to_keep_city_skyline_807;
 pub mod longest_increasing_subsequence_300;
 pub mod decode_ways_91;
+pub mod longest_substring_without_replication_char_3;
+pub mod course_schedule_207;
+pub mod course_schedule_ii_210;

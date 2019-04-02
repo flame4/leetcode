@@ -38,7 +38,6 @@ impl Solution {
                 }
             }
         }
-        println!("m = {:?}", m);
         m[s.len()]
     }
 
