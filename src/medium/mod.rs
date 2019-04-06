@@ -14,3 +14,4 @@ pub mod decode_ways_91;
 pub mod longest_substring_without_replication_char_3;
 pub mod course_schedule_207;
 pub mod course_schedule_ii_210;
+pub mod find_k_pairs_with_smallest_sums;
