@@ -2,13 +2,14 @@ use std::rc::Rc;
 use std::cell::RefCell;
 use std::collections::vec_deque::VecDeque;
 
+pub type PackTreeNode = Option<Rc<RefCell<TreeNode>>>;
 
 // Definition for a binary tree node.
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
     pub val: i32,
-    pub left: Option<Rc<RefCell<TreeNode>>>,
-    pub right: Option<Rc<RefCell<TreeNode>>>,
+    pub left: PackTreeNode,
+    pub right: PackTreeNode,
 }
 
 #[allow(dead_code)]
@@ -24,7 +25,7 @@ impl TreeNode {
 
     /// 层次遍历法构造树, 和leetcode给出的方式一样.
     /// From https://github.com/Aloxaf/leetcode_prelude/blob/master/leetcode_prelude/src/btree.rs, thx :-)
-    pub fn from_layer_vec(input: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
+    pub fn from_layer_vec(input: Vec<Option<i32>>) -> PackTreeNode {
         if input.is_empty() { return None; }
         // Queue内的节点装的是所有准备好 **给他们的儿子赋值** 的节点
         let mut queue = VecDeque::new();
