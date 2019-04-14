@@ -25,3 +25,4 @@ pub mod non_decreasing_array_665;
 pub mod valid_parentheses_20;
 pub mod reverse_integer_7;
 pub mod remove_element_27;
+pub mod house_robber_198;
