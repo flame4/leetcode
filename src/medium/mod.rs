@@ -19,3 +19,4 @@ pub mod path_sum_ii_113;
 pub mod longest_mountain_in_array_845;
 pub mod maximum_product_subarray_152;
 pub mod word_search_79;
+pub mod word_ladder_127;
