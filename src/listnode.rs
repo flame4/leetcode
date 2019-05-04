@@ -16,6 +16,7 @@ impl ListNode {
 
     #[allow(dead_code)]
     pub fn from_vec(array: Vec<i32>) -> Option<Box<Self>> {
+        if array.is_empty() { return None; }
         let mut root = Some(Box::new(ListNode::new(0)));
         let mut follow = &mut root;
         let length = array.len();
@@ -31,7 +32,7 @@ impl ListNode {
     }
 
     #[allow(dead_code)]
-    pub fn into_vec(&self) -> Vec<i32> {
+    pub fn show_as_vec(&self) -> Vec<i32> {
         // TODO implement an Iter
         let mut ret = vec![];
         let mut r = self;
@@ -42,7 +43,16 @@ impl ListNode {
         }
         ret
     }
+}
 
-    #[allow(dead_code)]
-    pub fn show(&self) {}
+#[cfg(test)]
+mod tests {
+    use crate::listnode::ListNode;
+
+    #[test]
+    pub fn listnode_vec_trans() {
+        let v = vec![3, 2, 42, 2, 5, 2, 3, 4, 5, 2, 3, 4, 5, 2, 3, 4, 1, 1, 3, 1, 3];
+        let root = ListNode::from_vec(v.clone());
+        assert_eq!(root.unwrap().show_as_vec(), v);
+    }
 }

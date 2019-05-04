@@ -43,6 +43,6 @@ mod tests {
     pub fn middle_node_1() {
         let v = vec![1, 2, 3, 4, 5, 6];
         let root = ListNode::from_vec(v);
-        assert_eq!(Solution::middle_node(root).unwrap().into_vec(), vec![4,5,6]);
+        assert_eq!(Solution::middle_node(root).unwrap().show_as_vec(), vec![4, 5, 6]);
     }
 }

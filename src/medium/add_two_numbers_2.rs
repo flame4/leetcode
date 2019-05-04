@@ -55,15 +55,15 @@ mod tests {
 
     #[test]
     pub fn add_two_numbers_test() {
-        assert_eq!(ListNode::from_vec(vec![7, 0, 8]).unwrap().into_vec(),
+        assert_eq!(ListNode::from_vec(vec![7, 0, 8]).unwrap().show_as_vec(),
                    Solution::add_two_numbers(
                        ListNode::from_vec(vec![2, 4, 3]),
-                       ListNode::from_vec(vec![5, 6, 4])).unwrap().into_vec()
+                       ListNode::from_vec(vec![5, 6, 4])).unwrap().show_as_vec()
         );
-        assert_eq!(ListNode::from_vec(vec![3, 0, 0, 1]).unwrap().into_vec(),
+        assert_eq!(ListNode::from_vec(vec![3, 0, 0, 1]).unwrap().show_as_vec(),
                    Solution::add_two_numbers(
                        ListNode::from_vec(vec![4, 0, 1]),
-                       ListNode::from_vec(vec![9, 9, 8])).unwrap().into_vec()
+                       ListNode::from_vec(vec![9, 9, 8])).unwrap().show_as_vec()
         );
     }
 }

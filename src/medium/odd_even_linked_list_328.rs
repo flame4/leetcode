@@ -1,98 +1,60 @@
 use crate::Solution;
 use crate::listnode::ListNode;
-use std::mem;
 
 impl Solution {
     /// https://leetcode.com/problems/odd-even-linked-list/
-    /// 线性时间, o(1)空间, 把链表换成先是奇数后是偶数的分布.
-    /// 因为需要在O(1)时间内完成, 并且不申请新空间. 所以需要维护一个奇数的引用位置.
-    /// 新找到一个奇数后, 在这个奇数位置后面放这个节点.
-    /// 首先，我们不挪动节点，而是交换节点的值.
-    /// 对于奇数的尾部引用, 我们不需要维护可变引用, 因为我们每次修改的都是这个节点的下一个节点.
-    /// 对于当前访问的指针, 我们需要维护可变指针, 其可能变化.
-    /// 这样实现的问题是, 我们不知道什么时候才能找到第一个奇数值, 但是我们从header进去的时候只能拿到一个mut的引用值，
-    /// 导致我们不能延时赋值给head. 否则会出现可变/不可变借用同时存在的场景.
-    /// 所以我们必须先走一步, 找到第一个奇数值, 把head给初始化掉.
+    /// 线性时间, o(1)空间, 把链表换顺序排序，先是偶数位置的数字，再是奇数位置的数字
+    /// 尝试直接变更这个线性链表的指针位置在Rust内会遇到所有权冲突的问题，不是很好.
+    /// 这里重新开两个链表, 最后接到一起就好了. 时间复杂度和空间复杂度都是ok的.
     pub fn odd_even_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         if head.is_none() { return None; }
-        let mut head = { head }.unwrap();
-        // 当前即将访问的节点.
-        let mut now_visit_node: Option<&mut Box<ListNode>>;
-        // 当前的odd节点的tail节点位置.
-        let mut odd_position_now: Option<&Box<ListNode>>;
-
-        // 先初始化第一个节点.
-
-        let mut tmp = head.next.as_mut();
-        let mut has_odd = false;
-        loop {
-            if let Some(n) = tmp {
-                tmp = n.next.as_mut();
-                if n.val % 2 == 1 {
-                    mem::swap(&mut head.val, &mut n.val);
-                    has_odd = true;
-                    break;
-                }
+        let mut head = { head };
+        let mut odd_list = ListNode::new(0);
+        let mut even_list = ListNode::new(0);
+        let mut odd_next = &mut odd_list.next;
+        let mut even_next = &mut even_list.next;
+        let mut offset = 1;
+        while let Some(mut n) = head.take() {
+            head = n.next.take();
+            if (offset & 1) == 1 {
+                // offset is even, start from 1.
+                even_next.replace(n);
+                even_next = &mut even_next.as_mut().unwrap().next;
             } else {
-                break;
+                odd_next.replace(n);
+                odd_next = &mut odd_next.as_mut().unwrap().next;
             }
+            offset += 1;
         }
-        if !has_odd {
-            return Some(head);
+
+//        drop(odd_next);
+//        drop(even_next);
+//        println!("odd = {:?} \t even = {:?}", odd_list.into_vec(), even_list.into_vec());
+        if odd_list.next.is_some() {
+            even_next.replace(odd_list.next.take().unwrap());
         }
-        now_visit_node = tmp;
-        odd_position_now = Some(&head);
+        even_list.next.take()
+    }
+}
 
 
-        // 接下来就可以循环查找.
-        loop {
-            let mut tmp = now_visit_node.unwrap();
-            now_visit_node = tmp.next.as_mut();
-            if tmp.val % 2 == 1 {
-                // 可能还没找到一个odd开头的节点. 但是因为前面已经借用了header的头，这里用unsafe创建一个最小不安全区域重新修改一下.
+#[cfg(test)]
+mod tests {
+    use super::Solution;
+    use crate::listnode::ListNode;
 
-                let mut odd_next = odd_position_now.unwrap().next.as_mut().unwrap();
-                mem::swap(&mut tmp.val, &mut odd_next.val);
-            }
+    #[test]
+    pub fn odd_even_list_test() {
+        let v = vec![2, 1, 3, 5, 6, 4, 7];
+        let root = ListNode::from_vec(v);
+        assert_eq!(Solution::odd_even_list(root).unwrap().show_as_vec(), vec![2, 3, 6, 7, 1, 5, 4]);
 
-            odd_position_now = odd_position_now.unwrap().next.as_ref();
-            if now_visit_node.is_none() {
-                break;
-            }
-        }
-        Some(head)
-//        unsafe {
-//            // 先初始化第一个节点.
-//            if let Some(n) = head_ptr.as_mut() {
-//                if n % 2 == 1 {
-//                    odd_position_now = &mut head_ptr.as_mut() as *mut Option<&mut Box<ListNode>>;
-//                }
-//                now_visit_node = &mut head.as_mut() as *mut Option<&mut Box<ListNode>>;
-//            }
-//
-//            while let Some(n) = *now_visit_node {
-//                if let Some(next) = n.next.as_mut() {
-//                    if next.val % 2 == 1 {
-//                        (*n).next = next.next;
-//                        // 找到一个奇数节点, 把其挂到当前链表后面, 这个位置去掉这个节点.
-//                        if (*odd_position_now).is_none() {
-//                            // odd_position可能没被初始化.
-//                            (*next).next = head;
-//                            head = Some(next);
-//                        } else {
-//                            let mut tmp = odd_position_now.unwrap();
-//                            (*next).next = tmp.next;
-//                            tmp.next = Some(*next);
-//                            odd_position_now = tmp.next.as_mut();
-//                        }
-//                    } else {
-//                        // 没找到奇数节点, 往后走.
-//                        now_visit_node = &mut n.next.as_mut() as *mut Option<&mut Box<ListNode>>;
-//                    }
-//                } else {
-//                    break;
-//                }
-//            }
-//        }
+        let v = vec![];
+        let root = ListNode::from_vec(v);
+        assert_eq!(Solution::odd_even_list(root), None);
+
+        let v = vec![1];
+        let root = ListNode::from_vec(v);
+        assert_eq!(Solution::odd_even_list(root).unwrap().show_as_vec(), vec![1]);
     }
 }
