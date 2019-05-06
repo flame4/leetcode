@@ -26,3 +26,4 @@ pub mod odd_even_linked_list_328;
 pub mod coin_change_322;
 pub mod product_of_array_except_self_238;
 pub mod generate_parentheses_22;
+pub mod find_the_duplicate_number_287;
