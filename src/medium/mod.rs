@@ -23,5 +23,6 @@ pub mod word_ladder_127;
 pub mod validate_binary_search_tree_98;
 pub mod top_k_frequent_elements_347;
 pub mod odd_even_linked_list_328;
+pub mod coin_change_322;
 pub mod product_of_array_except_self_238;
 pub mod generate_parentheses_22;
