@@ -28,3 +28,4 @@ pub mod product_of_array_except_self_238;
 pub mod generate_parentheses_22;
 pub mod find_the_duplicate_number_287;
 pub mod search_a_2d_matrix_ii_240;
+pub mod kth_smallest_element_in_a_bst_230;
