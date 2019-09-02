@@ -27,3 +27,4 @@ pub mod reverse_integer_7;
 pub mod remove_element_27;
 pub mod house_robber_198;
 pub mod reverse_linked_list_206;
+pub mod two_sum_1;
