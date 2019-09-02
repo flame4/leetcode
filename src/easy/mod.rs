@@ -28,3 +28,4 @@ pub mod remove_element_27;
 pub mod house_robber_198;
 pub mod reverse_linked_list_206;
 pub mod two_sum_1;
+pub mod implement_queue_using_stack_232;
