@@ -31,3 +31,4 @@ pub mod two_sum_1;
 pub mod implement_queue_using_stack_232;
 pub mod invert_binary_tree_226;
 pub mod reverse_string_344;
+pub mod design_hashmap_706;
